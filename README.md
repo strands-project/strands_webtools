@@ -30,3 +30,11 @@ sudo apt-get install￼ros-groovy-rosbridge-suite
 
 
 
+
+# Running
+
+ 1. Run robot/sim plus nav
+ 2. Rub webserver in root directory of repo: `python -m SimpleHTTPServer`
+ 3. Run rosbridge: `roslaunch rosbridge_server rosbridge_websocket.launch`
+ 4. Run mjpeg server: `rosrun mjpeg_server mjpeg_server`
+ 5. Open in web browser: [http://localhost:8000/main.html](http://localhost:8000/main.html)
