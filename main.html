@@ -49,13 +49,17 @@
       url : 'ws://localhost:9090'
       });
 
+      // ----------------------------------------------------------------------
       // Initialize the teleop.
+      // ----------------------------------------------------------------------
       var teleop = new KEYBOARDTELEOP.Teleop({
       ros : ros,
       topic : '/cmd_vel'
       });
 
+      // ----------------------------------------------------------------------
       // Create a UI slider using JQuery UI.
+      // ----------------------------------------------------------------------
       $('#speed-slider').slider({
       range : 'min',
       min : 0,
@@ -69,17 +73,69 @@
       }
       });
 
+      // ----------------------------------------------------------------------
       // Set the initial speed .
+      // ----------------------------------------------------------------------
       $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
       teleop.scale = ($('#speed-slider').slider('value') / 100.0);
       
-      // Create the main viewer.
+      // ----------------------------------------------------------------------
+      // Create the camera viewer.
+      // ----------------------------------------------------------------------
       var viewer = new MJPEGCANVAS.Viewer({
       divID : 'mjpeg',
       host : 'localhost',
-      width : 640,
-      height : 480,
+      width : 560,
+      height : 420,
       topic : '/videocam/image'
+      });
+      
+      
+      // ----------------------------------------------------------------------
+      // Rendering the robot in 3D
+      // ----------------------------------------------------------------------
+
+      // Create the scene manager and view port for the 3D world.
+      var viewer3D = new ROS3D.Viewer({
+        divID      : 'threed-map',
+        width      : 560,
+        height     : 420,
+        antialias  : true,
+        background : '#EEEEEE'
+      });
+
+      // Create a TF client that subscribes to the fixed frame.
+      var tfClient = new ROSLIB.TFClient({
+        ros          : ros,
+        angularThres : 0.01,
+        transThres   : 0.01,
+        rate         : 10.0
+      });
+
+      // Add the URDF model of the robot.
+      var urdfClient = new ROS3D.UrdfClient({
+        ros        : ros,
+        tfClient   : tfClient,
+        path       : 'http://resources.robotwebtools.org/',
+        rootObject : viewer3D.scene
+      });
+
+
+      // ----------------------------------------------------------------------
+      // Rendering the map in 3D
+      // ----------------------------------------------------------------------
+
+      // Add the Occupancy Grid map.
+      var grid = new ROS3D.OccupancyGridClient({
+        ros        : ros,
+        tfClient   : tfClient,
+        rootObject : viewer3D.scene
+      });
+      grid.on('change', function() {
+        // Change the opacity level.
+        grid.currentGrid.children[0].material.transparent = true;
+        grid.currentGrid.children[0].material.opacity = 0.25;
+        grid.currentGrid.children[0].material.needsUpdate = true;
       });
       }
     </script>
@@ -102,9 +158,17 @@
       <div id="speed-label"></div>
       <div id="speed-slider"></div>
     
-      <h1><small>Robot cam</small></h1>
-      <div id="mjpeg"></div>
-    </div>
 
+      <div class="row">
+        <div class="col-span-6">
+          <h1><small>3D map</small></h1>
+          <div id="threed-map"></div>
+        </div>
+        <div class="col-span-6">
+          <h1><small>Robot cam</small></h1>
+          <div id="mjpeg"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
