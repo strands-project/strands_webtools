@@ -79,6 +79,38 @@
       $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
       teleop.scale = ($('#speed-slider').slider('value') / 100.0);
       
+
+      // ----------------------------------------------------------------------
+      // Subscribing to the robot's Pose
+      // ----------------------------------------------------------------------
+
+      // The ROSLIB.Topic handles subscribing and publishing a ROS topic. This
+      // topic interacts with the /robot_pose topic, published by the robot.
+      var poseTopic = new ROSLIB.Topic({
+        ros         : ros,
+        name        : '/amcl_pose',
+        messageType : 'geometry_msgs/PoseWithCovarianceStamped'
+      });
+      // Subscribes to the robot's pose. When rosbridge receives the pose
+      // message from ROS, it forwards the message to roslibjs, which calls this
+      // callback.
+      poseTopic.subscribe(function(message) {
+        // Formats the pose for outputting.
+        var now = new Date();
+        var position = 'x: ' + message.pose.pose.position.x
+          + ', y: ' + message.pose.pose.position.y
+          + ', z: 0.0';
+        var orientation = 'x: ' + message.pose.pose.orientation.x
+          + ', y: ' + message.pose.pose.orientation.y
+          + ', z: ' + message.pose.pose.orientation.z
+          + ', w: ' + message.pose.pose.orientation.w;
+        // Prepends a row to the "poses" table with the formatted pose.
+        $('#poses > tbody > tr:first').after('<tr>'
+          + '<td>' + now.toLocaleTimeString() + '</td>'
+          + '<td>' + position + '</td>'
+          + '<td>' + orientation + '</td>');
+      });
+
       // ----------------------------------------------------------------------
       // Create the camera viewer.
       // ----------------------------------------------------------------------
@@ -158,7 +190,6 @@
       <div id="speed-label"></div>
       <div id="speed-slider"></div>
     
-
       <div class="row">
         <div class="col-span-6">
           <h1><small>3D map</small></h1>
@@ -169,6 +200,26 @@
           <div id="mjpeg"></div>
         </div>
       </div>
+
+      <!-- Pose Table -->
+      <div class="row" id="pose-data">
+        <div class="col-span-12">
+          <h1><small>Robot's Pose</small></h1>
+          <table id="poses" class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Position</th>
+                <th>Orientation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
     </div>
   </body>
 </html>
