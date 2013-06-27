@@ -154,7 +154,8 @@
         ros          : ros,
         angularThres : 0.01,
         transThres   : 0.01,
-        rate         : 10.0
+        rate         : 10.0,
+        fixedFrame   : '/map'
       });
 
       // Add the URDF model of the robot.
@@ -163,6 +164,20 @@
         tfClient   : tfClient,
         rootObject : viewer3D.scene
       });
+
+      var colorMaterial = ROS3D.makeColorMaterial(1, 0, 0,0.5);
+
+      // Track robot pose with an arrow
+      var arrowNode = new ROS3D.SceneNode({
+      tfClient : tfClient,
+      frameID  : '/base_link',
+      object   : new ROS3D.Arrow({
+        length : 0.3,
+         material : colorMaterial
+      }),        
+    });
+
+    viewer3D.scene.add(arrowNode);
 
 
       // ----------------------------------------------------------------------

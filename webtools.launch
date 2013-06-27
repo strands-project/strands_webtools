@@ -3,4 +3,5 @@
 	<node pkg="strands_webtools" type="webserver.sh" name="webserver" cwd="node" />
 	<node pkg="mjpeg_server" type="mjpeg_server" name="mjpeg_server" />
 	<node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" />
+	<node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />
 </launch>
