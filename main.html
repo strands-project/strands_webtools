@@ -41,13 +41,15 @@
     <script type="text/javascript" src="js/ptu_keyboardteleop.js"></script>
 
     <script type="text/javascript">
+      var hostname = location.hostname;
+
       /**
       * Setup all GUI elements when the page is loaded.
       */
       function init() {
       // Connecting to ROS.
       var ros = new ROSLIB.Ros({
-      url : 'ws://localhost:9090'
+      url : 'ws://'+hostname+':9090'
       });
 
       // ----------------------------------------------------------------------
@@ -63,7 +65,7 @@
       // ----------------------------------------------------------------------
       var teleop = new PTU_KEYBOARDTELEOP.Teleop({
       ros : ros,
-      topic : '/ptu'
+      topic : '/ptu_jointstate'
       });
 
       // ----------------------------------------------------------------------
@@ -123,9 +125,11 @@
       // ----------------------------------------------------------------------
       // Create the camera viewer.
       // ----------------------------------------------------------------------
+
+
       var viewer = new MJPEGCANVAS.Viewer({
       divID : 'mjpeg',
-      host : 'localhost',
+      host : hostname,
       width : 560,
       height : 420,
       topic : '/videocam/image'
@@ -157,7 +161,6 @@
       var urdfClient = new ROS3D.UrdfClient({
         ros        : ros,
         tfClient   : tfClient,
-        path       : 'http://resources.robotwebtools.org/',
         rootObject : viewer3D.scene
       });
 
