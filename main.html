@@ -38,6 +38,7 @@
     <script type="text/javascript" src="js/jquery-ui.js"></script>
 
     <script type="text/javascript" src="js/keyboardteleop.js"></script>
+    <script type="text/javascript" src="js/ptu_keyboardteleop.js"></script>
 
     <script type="text/javascript">
       /**
@@ -55,6 +56,14 @@
       var teleop = new KEYBOARDTELEOP.Teleop({
       ros : ros,
       topic : '/cmd_vel'
+      });
+
+      // ----------------------------------------------------------------------
+      // Initialize the PTU teleop.
+      // ----------------------------------------------------------------------
+      var teleop = new PTU_KEYBOARDTELEOP.Teleop({
+      ros : ros,
+      topic : '/ptu'
       });
 
       // ----------------------------------------------------------------------
@@ -183,10 +192,23 @@
     </div>
     <div class="container">
       <h1><small>Simple keyboard control</small></h1>
-      <ul>
-        <li>w/s  to move forward and backward</li>
-        <li>a/d  to move left and right</li>
-      </ul>
+      <div class="row">
+        <div class="col-span-6">
+          <h2><small>Robot</small></h2>
+          <ul>
+            <li><strong>w/s</strong>  to move forward and backward</li>
+            <li><strong>a/d</strong>  to move left and right</li>
+          </ul>
+        </div>
+        <div class="col-span-6">
+          <h2><small>PTU</small></h2>
+          <ul>
+            <li><strong>j/k</strong>  to move the PTU down and up</li>
+            <li><strong>h/l</strong>  to move the PTU left and right</li>
+            <li><strong>o</strong>    to move the PTU to the default pose</li>
+          </ul>
+        </div>
+      </div>
       <div id="speed-label"></div>
       <div id="speed-slider"></div>
     
