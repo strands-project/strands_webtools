@@ -12,7 +12,7 @@ An interface to access the real and/or simulated robot via web applications
 
  * ROS requirements on Ubuntu: 
 ```bash
-sudo apt-get install￼ros-groovy-rosbridge-suite ros-groovy-robot-pose-publisher
+sudo apt-get install ￼ros-groovy-rosbridge-suite ros-groovy-robot-pose-publisher ros-groovy-tf2-web-republisher ros-groovy-mjpeg-server
 ```
 
  * ROS requirements from source (e.g. OS X): rosbridge_suite, rosauth, tf2_web_republisher, mjpeg_server, robot_pose_publisher
