@@ -29,4 +29,5 @@ sudo apt-get install￼ros-groovy-rosbridge-suite
 # Running
 1. `roslaunch strands_webtools webtools.launch`
 2. `rosrun strands_utils republish_robot_pose.py` (for `/robot_pose` workaround described [here](https://github.com/strands-project/strands_webtools/issues/12#issuecomment-20111023))
-3. Open in web browser: [http://localhost:8000/main.html](http://localhost:8000/main.html)
+3. (optional) `rosrun strands_utils republish_ptu_jointstate.py` (republishes the PTU joint state on `/ptu`, only needed for MORSE)
+4. Open in web browser: [http://localhost:8000/main.html](http://localhost:8000/main.html)
