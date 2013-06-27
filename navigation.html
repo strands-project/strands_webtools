@@ -37,11 +37,13 @@
       var ros = new ROSLIB.Ros({
       url : 'ws://'+hostname+':9090'
       });
+
+
    // Create the main viewer.
     var viewer = new ROS2D.Viewer({
       divID : 'nav',
-      width : 400,
-      height : 400
+      width : window.innerWidth/2,
+      height : window.innerHeight
     });
 
       // Subscribes to the robot's OccupancyGrid, which is ROS representation of
@@ -60,19 +62,62 @@
       serverName : '/move_base'
     });
 
+    var xDelta = 0;
+    var yDelta = 0;
 
 
 
-    // Setup the nav client.
-    //var nav = NAV2D.OccupancyGridClientNav({
-     // ros : ros,
-     // rootObject : viewer.scene,
-     // viewer : viewer,
-     // serverName : '/move_base'
-    //});
-    //nav.on('change', function(){
-    //	viewer.scaleToDimensions(nav.currentGrid.width, nav.currentGrid.height);
-    //});
+
+    // move view using keyboard
+    // sets up a key listener on the page used for keyboard teleoperation
+  var handleKey = function(keyCode, keyDown) {
+    // used to check for changes in speed
+
+    var shiftAmout = 0.5;
+
+    // check which key was pressed
+    if (keyDown === true) {
+    switch (keyCode) {
+      case 65:
+        // turn left
+        viewer.shift(shiftAmout,0);
+        xDelta -= shiftAmout;
+        break;
+      case 87:
+        // up
+        viewer.shift(0,-shiftAmout);
+        yDelta += shiftAmout;
+        break;
+      case 68:
+        // turn right
+        viewer.shift(-shiftAmout,0);
+        xDelta += shiftAmout;
+        break;
+      case 83:
+        // down
+        viewer.shift(0,shiftAmout);
+        yDelta -= shiftAmout;
+        break;
+      case 79:
+        // recentre
+        viewer.shift(xDelta,yDelta);        
+        xDelta = 0;
+        yDelta = 0;
+        break;
+    }
+  }
+  };
+
+  
+ // handle the key
+  var body = document.getElementsByTagName('body')[0];
+  body.addEventListener('keydown', function(e) {
+    handleKey(e.keyCode, true);
+  }, false);
+  body.addEventListener('keyup', function(e) {
+    handleKey(e.keyCode, false);
+  }, false);
+
 }
 </script>
 </head>
@@ -81,12 +126,17 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <a class="navbar-brand" href="#">strands_webtools</a>      
       <ul class="nav pull-right">
-      <li class="active"><a href="main.html">Main</a></li>
-      <li><a href="navigation.html">Autonomous</a></li>
+      <li><a href="main.html">Main</a></li>
+      <li class="active"><a href="navigation.html">Autonomous</a></li>
     </ul>
     </div>
     <div class="container">
   <h1>Map for autonomous Navigation</h1>
+  <ul>
+            <li><strong>w/s</strong>  to move map up and down</li>
+            <li><strong>a/d</strong>  to move map left and right</li>
+            <li><strong>o</strong>  to reset map to original position</li>
+          </ul>
   <div id="nav"></div>
 double click on the map to send the robot
    </div>
