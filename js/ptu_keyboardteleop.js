@@ -21,13 +21,13 @@ var PTU_KEYBOARDTELEOP = PTU_KEYBOARDTELEOP || {
  * @constructor
  * @param options - possible keys include:
  *   * ros - the ROSLIB.Ros connection handle
- *   * topic (optional) - the Vector3 topic to publish to, like '/ptu'
+ *   * topic (optional) - the Vector3 topic to publish to, like '/ptu_jointstate'
  */
 PTU_KEYBOARDTELEOP.Teleop = function(options) {
     var that = this;
     options = options || {};
     var ros = options.ros;
-    var topic = options.topic || '/ptu';
+    var topic = options.topic || '/ptu_jointstate';
     
     var y = 0;
     var z = 0;
@@ -35,7 +35,7 @@ PTU_KEYBOARDTELEOP.Teleop = function(options) {
     var ptu_topic = new ROSLIB.Topic({
         ros : ros,
         name : topic,
-        messageType : 'geometry_msgs/Vector3'
+        messageType : 'sensor_msgs/JointState'
     });
 
     // sets up a key listener on the page used for keyboard teleoperation
@@ -76,17 +76,23 @@ PTU_KEYBOARDTELEOP.Teleop = function(options) {
         }
 
         // publish the command
-        var vec3 = new ROSLIB.Message({
-            x : 0,
-            y : y,
-            z : z
+        var jointstate = new ROSLIB.Message({
+            header: {
+                seq: 0,
+                stamp: "",
+                frame_id: ""
+            },
+            name:  ['pan', 'tilt'],
+            position: [z,  y],
+            velocity: [0.0,  0.0],
+            effort:  [0.0,  0.0]
         });
         console.log('publishing');
-        ptu_topic.publish(vec3);
+        ptu_topic.publish(jointstate);
 
         // check for changes
         if (oldY !== y || oldZ !== z) {
-            that.emit('change', vec3);
+            that.emit('change', jointstate);
         }
     };
 
