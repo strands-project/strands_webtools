@@ -26,6 +26,8 @@
 
 
 <script type="text/javascript">
+  var hostname = location.hostname;
+
   /**
    * Setup all GUI elements when the page is loaded.
    */
@@ -33,7 +35,7 @@
     // Connect to ROS.
       // Connecting to ROS.
       var ros = new ROSLIB.Ros({
-      url : 'ws://localhost:9090'
+      url : 'ws://'+hostname+':9090'
       });
    // Create the main viewer.
     var viewer = new ROS2D.Viewer({
