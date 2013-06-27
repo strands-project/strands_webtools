@@ -24,11 +24,9 @@ sudo apt-get install￼ros-groovy-rosbridge-suite
 - git: {local-name: mjpeg_server, uri: 'https://github.com/RobotWebTools/mjpeg_server.git'}
 ```
 
-
-
-
-
+ * STRANDS-based requirements: strands_utils (for `/robot_pose` workaround described [here](https://github.com/strands-project/strands_webtools/issues/12#issuecomment-20111023))
 
 # Running
 1. `roslaunch strands_webtools webtools.launch`
-1. Open in web browser: [http://localhost:8000/main.html](http://localhost:8000/main.html)
+2. `rosrun strands_utils republish_robot_pose.py` (for `/robot_pose` workaround described [here](https://github.com/strands-project/strands_webtools/issues/12#issuecomment-20111023))
+3. Open in web browser: [http://localhost:8000/main.html](http://localhost:8000/main.html)
