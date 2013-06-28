@@ -275,5 +275,6 @@ NAV2D.OccupancyGridClientNav = function(options) {
     
     // scale the viewer to fit the map
     that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
+    that.viewer.shift(client.currentGrid.x,client.currentGrid.y)
   });
 };
