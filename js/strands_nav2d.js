@@ -1,5 +1,8 @@
 /**
  * @author Russell Toris - rctoris@wpi.edu
+ * 
+ * adapted by Lars Kunze - l.kunze@cs.bham.ac.uk
+ * - 2D navigator with orientation 
  */
 
 var NAV2D = NAV2D || {
@@ -184,7 +187,7 @@ NAV2D.Navigator = function(options) {
                 position : new ROSLIB.Vector3(position),
                 orientation : new ROSLIB.Quaternion()
             });
-cd ..
+
 
             var x_diff =  goal_dir_pos.x - pose.position.x;
             var y_diff =  goal_dir_pos.y - pose.position.y;
