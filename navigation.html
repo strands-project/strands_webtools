@@ -20,7 +20,8 @@
     <script src="ros2djs/build/ros2d.js"></script>
 
     <!-- <script src="js/nav2d.min.js"></script> -->
-    <script src="js/strands_nav2d.js"></script>
+    <!-- <script src="js/strands_nav2d.js"></script> -->
+    <script src="nav2djs/build/nav2d.js"></script> -->
 
     <script type="text/javascript">
       var hostname = location.hostname;
@@ -56,7 +57,8 @@
       ros : ros,
       rootObject : viewer.scene,
       viewer : viewer,
-      serverName : '/move_base'
+      serverName : '/move_base',
+      withOrientation : true
       });
 
       var xDelta = 0;
@@ -114,7 +116,6 @@
       body.addEventListener('keyup', function(e) {
       handleKey(e.keyCode, false);
       }, false);
-
       }
     </script>
   </head>
