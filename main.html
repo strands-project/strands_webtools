@@ -6,38 +6,38 @@
     <!-- The default styling is provided by http://getbootstrap.com -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
 
     <!-- jQuery and display.js are conveniences for interacting with the DOM -->
     <script src="js/jquery.js"></script>
     <script src="js/display.js"></script>
 
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+
     <!-- ROSLIBJS -->
     <!-- EventEmitter2 is the sole dependency of roslibjs -->
-    <script src="js/eventemitter2.js"></script>
+    <script src="roslibjs/include/EventEmitter2/eventemitter2.js"></script>
     <!-- Roslibjs handles core ROS functionality in the browser -->
-    <script src="js/roslib.js"></script>
+    <script src="roslibjs/build/roslib.js"></script>
 
     <!-- ROS2DJS -->
     <!-- EaselJS is a dependency of ros2djs -->
-    <script src="js/easeljs.js"></script>
+    <script src="ros2djs/include/EaselJS/easeljs.js"></script>
     <!-- Ros2djs provides 2D scene support, including mapping and more -->
-    <script src="js/ros2d.js"></script>
+    <script src="ros2djs/build/ros2d.js"></script>
 
     <!-- ROS3DJS -->
     <!-- Three.js is the WebGL rendering library -->
-    <script src="js/three.js"></script>
+    <script src="ros3djs/include/threejs/three.js"></script>
     <!-- ColladaLoader2 loads collada models of the robot -->
-    <script src="js/ColladaLoader2.js"></script>
+    <script src="ros3djs/include/ColladaAnimationCompress/ColladaLoader2.js"></script>
     <!-- Ros3djs provides 3D scene support, including mapping and more -->
-    <script src="js/ros3d.js"></script>
+    <script src="ros3djs/build/ros3d.min.js"></script>
     
-    <script type="text/javascript" src="js/mjpegcanvas.js"></script>
+    <script type="text/javascript" src="mjpegcanvasjs/build/mjpegcanvas.min.js"></script>
 
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="keyboardteleopjs/build/keyboardteleop.min.js"></script>
 
-    <script type="text/javascript" src="js/keyboardteleop.js"></script>
     <script type="text/javascript" src="js/ptu_keyboardteleop.js"></script>
 
     <script type="text/javascript">
@@ -98,115 +98,115 @@
       // The ROSLIB.Topic handles subscribing and publishing a ROS topic. This
       // topic interacts with the /robot_pose topic, published by the robot.
       var poseTopic = new ROSLIB.Topic({
-        ros         : ros,
-        name        : '/amcl_pose',
-        messageType : 'geometry_msgs/PoseWithCovarianceStamped'
+      ros         : ros,
+      name        : '/amcl_pose',
+      messageType : 'geometry_msgs/PoseWithCovarianceStamped'
       });
       // Subscribes to the robot's pose. When rosbridge receives the pose
       // message from ROS, it forwards the message to roslibjs, which calls this
       // callback.
       poseTopic.subscribe(function(message) {
-        // Formats the pose for outputting.
-        var now = new Date();
-        var position = 'x: ' + message.pose.pose.position.x
-          + ', y: ' + message.pose.pose.position.y
-          + ', z: 0.0';
-        var orientation = 'x: ' + message.pose.pose.orientation.x
-          + ', y: ' + message.pose.pose.orientation.y
-          + ', z: ' + message.pose.pose.orientation.z
-          + ', w: ' + message.pose.pose.orientation.w;
-        // Prepends a row to the "poses" table with the formatted pose.
-        $('#poses > tbody > tr:first').after('<tr>'
-          + '<td>' + now.toLocaleTimeString() + '</td>'
-          + '<td>' + position + '</td>'
-          + '<td>' + orientation + '</td>');
-      });
+      // Formats the pose for outputting.
+      var now = new Date();
+      var position = 'x: ' + message.pose.pose.position.x
+      + ', y: ' + message.pose.pose.position.y
+      + ', z: 0.0';
+      var orientation = 'x: ' + message.pose.pose.orientation.x
+      + ', y: ' + message.pose.pose.orientation.y
+      + ', z: ' + message.pose.pose.orientation.z
+      + ', w: ' + message.pose.pose.orientation.w;
+      // Prepends a row to the "poses" table with the formatted pose.
+      $('#poses > tbody > tr:first').after('<tr>'
+        + '<td>' + now.toLocaleTimeString() + '</td>'
+        + '<td>' + position + '</td>'
+        + '<td>' + orientation + '</td>');
+        });
 
-      // ----------------------------------------------------------------------
-      // Create the camera viewer.
-      // ----------------------------------------------------------------------
+        // ----------------------------------------------------------------------
+        // Create the camera viewer.
+        // ----------------------------------------------------------------------
 
 
-      var viewer = new MJPEGCANVAS.Viewer({
-      divID : 'mjpeg',
-      host : hostname,
-      width : 560,
-      height : 420,
-      topic : '/videocam/image'
-      });
-      
-      
-      // ----------------------------------------------------------------------
-      // Rendering the robot in 3D
-      // ----------------------------------------------------------------------
+        var viewer = new MJPEGCANVAS.Viewer({
+        divID : 'mjpeg',
+        host : hostname,
+        width : 560,
+        height : 420,
+        topic : '/videocam/image'
+        });
+        
+        
+        // ----------------------------------------------------------------------
+        // Rendering the robot in 3D
+        // ----------------------------------------------------------------------
 
-      // Create the scene manager and view port for the 3D world.
-      var viewer3D = new ROS3D.Viewer({
+        // Create the scene manager and view port for the 3D world.
+        var viewer3D = new ROS3D.Viewer({
         divID      : 'threed-map',
         width      : 560,
         height     : 420,
         antialias  : true,
         background : '#EEEEEE'
-      });
+        });
 
-      // Create a TF client that subscribes to the fixed frame.
-      var tfClient = new ROSLIB.TFClient({
+        // Create a TF client that subscribes to the fixed frame.
+        var tfClient = new ROSLIB.TFClient({
         ros          : ros,
         angularThres : 0.01,
         transThres   : 0.01,
         rate         : 10.0,
         fixedFrame   : '/map'
-      });
+        });
 
-      // Add the URDF model of the robot.
-      var urdfClient = new ROS3D.UrdfClient({
+        // Add the URDF model of the robot.
+        var urdfClient = new ROS3D.UrdfClient({
         ros        : ros,
         tfClient   : tfClient,
         rootObject : viewer3D.scene
-      });
+        });
 
-      var colorMaterial = ROS3D.makeColorMaterial(1, 0, 0,0.5);
+        var colorMaterial = ROS3D.makeColorMaterial(1, 0, 0,0.5);
 
-      // Track robot pose with an arrow
-      var arrowNode = new ROS3D.SceneNode({
-      tfClient : tfClient,
-      frameID  : '/base_link',
-      object   : new ROS3D.Arrow({
+        // Track robot pose with an arrow
+        var arrowNode = new ROS3D.SceneNode({
+        tfClient : tfClient,
+        frameID  : '/base_link',
+        object   : new ROS3D.Arrow({
         length : 0.3,
-         material : colorMaterial
-      }),        
-    });
+        material : colorMaterial
+        }),        
+        });
 
-    viewer3D.scene.add(arrowNode);
+        viewer3D.scene.add(arrowNode);
 
 
-      // ----------------------------------------------------------------------
-      // Rendering the map in 3D
-      // ----------------------------------------------------------------------
+        // ----------------------------------------------------------------------
+        // Rendering the map in 3D
+        // ----------------------------------------------------------------------
 
-      // Add the Occupancy Grid map.
-      var grid = new ROS3D.OccupancyGridClient({
+        // Add the Occupancy Grid map.
+        var grid = new ROS3D.OccupancyGridClient({
         ros        : ros,
         tfClient   : tfClient,
         rootObject : viewer3D.scene
-      });
-      grid.on('change', function() {
+        });
+        grid.on('change', function() {
         // Change the opacity level.
         grid.currentGrid.children[0].material.transparent = true;
         grid.currentGrid.children[0].material.opacity = 0.25;
         grid.currentGrid.children[0].material.needsUpdate = true;
-      });
-      }
+        });
+        }
     </script>
   </head>
 
   <body onload="init()">
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <a class="navbar-brand" href="#">strands_webtools</a>      
+      <a class="navbar-brand" href="#">strands_webtools</a>      
       <ul class="nav pull-right">
-      <li class="active"><a href="main.html">Main</a></li>
-      <li><a href="navigation.html">Autonomous</a></li>
-    </ul>
+        <li class="active"><a href="main.html">Main</a></li>
+        <li><a href="navigation.html">Autonomous</a></li>
+      </ul>
     </div>
     <div class="container">
       <h1><small>Simple keyboard control</small></h1>
@@ -229,7 +229,7 @@
       </div>
       <div id="speed-label"></div>
       <div id="speed-slider"></div>
-    
+      
       <div class="row">
         <div class="col-span-6">
           <h1><small>3D map</small></h1>
