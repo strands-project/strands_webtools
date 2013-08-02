@@ -19,7 +19,7 @@ rosdep -y install -r strands_webtools
 
 # Install Apache2
  * ```sudo apt-get install apache2 libapache2-mod-proxy-html```
- * install the mod_wstunnel for apache (the script `./build_wstunnel.sh` automates the following)
+ * install the mod_wstunnel for apache (the script `roscd strands_webtools; sudo ./build_wstunnel.sh` automates the following)
      ```
 # Check apache version (should be 2.2.20 as of writing, if not adjust the next step)
 dpkg -s apache2
@@ -41,7 +41,7 @@ sudo chmod 644 /usr/lib/apache2/modules/mod_proxy{_wstunnel,}.so
 echo -e "# Depends: proxy\nLoadModule proxy_wstunnel_module /usr/lib/apache2/modules/mod_proxy_wstunnel.so" | sudo tee -a /etc/apache2/mods-available/proxy_wstunnel.load
 
       ```
-  
+ * install configure Apache to run the STRANDS config: `roscd strands_webtools; bash -x ./configure_apache.sh` 
 
 # Running
 1. `roslaunch strands_webtools webtools.launch`
