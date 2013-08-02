@@ -19,7 +19,7 @@ rosdep -y install -r strands_webtools
 
 # Install Apache2
  * ```sudo apt-get install apache2 libapache2-mod-proxy-html```
- * install the mod_wstunnel for apache (the script `roscd strands_webtools; sudo ./build_wstunnel.sh` automates the following)
+ * install the [mod_wstunnel](http://www.amoss.me.uk/2013/06/apache-2-2-websocket-proxying-ubuntu-mod_proxy_wstunnel/) for apache (the script `roscd strands_webtools; sudo ./build_wstunnel.sh` automates the following)
      ```
 # Check apache version (should be 2.2.20 as of writing, if not adjust the next step)
 dpkg -s apache2
