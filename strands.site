@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+	DocumentRoot /var/www/strands
+	#ServerName marcs-pc
+	RewriteEngine On
+	#LogLevel debug
+	#RewriteRule ^/video http://localhost:8181/stream?topic=/head_xtion/rgb/image_color [P]
+	RewriteRule ^/video http://localhost:8181/stream?topic=/videocam/image [P]
+
+	#RewriteRule ^/scitos_description/(.+)$ /scitos_description/$1
+
+        ProxyPass /rosws ws://localhost:9090/
+    	ProxyPassReverse /rosws ws://localhost:9090/	
+
+</VirtualHost>
+

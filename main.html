@@ -49,7 +49,7 @@
       function init() {
       // Connecting to ROS.
       var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+':9090'
+      url : 'ws://'+hostname+'/rosws'
       });
 
       // ----------------------------------------------------------------------
@@ -130,6 +130,7 @@
         var viewer = new MJPEGCANVAS.Viewer({
         divID : 'mjpeg',
         host : hostname,
+        port : '80/video',
         width : 560,
         height : 420,
         topic : '/videocam/image'
