@@ -46,4 +46,4 @@ echo -e "# Depends: proxy\nLoadModule proxy_wstunnel_module /usr/lib/apache2/mod
 # Running
 1. `roslaunch strands_webtools webtools.launch`
 2. (optional) `rosrun topic_republisher republish_ptu_jointstate.py` (republishes the PTU joint state on `/ptu`, only needed for MORSE; The package [topic_republisher](https://github.com/strands-project/strands_utils/tree/master/topic_republisher) can be found in the [strands_utils](https://github.com/strands-project/strands_utils) repository)
-3. Open in web browser: [http://localhost:8000/main.html](http://localhost:8000/main.html)
+3. Open in web browser: [http://localhost/](http://localhost/)
