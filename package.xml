@@ -48,6 +48,9 @@
   <run_depend>mjpeg_server</run_depend> 
   <run_depend>rosapi</run_depend>
   <run_depend>scitos_description</run_depend>
+  <run_depend>tf2_web_republisher</run_depend>
+  <run_depend>rosauth</run_depend>
+
 
 
   <!-- The export tag contains other, unspecified, tags -->
