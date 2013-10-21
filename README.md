@@ -1,7 +1,7 @@
 strands_webtools
 ================
 
-An interface to access the real and/or simulated robot via web applications
+An interface to access the real and/or simulated robot via web applications. It is suggested that you run the server on a separate computer and have that computer connect to the robot's roscore, e.g. by setting `export ROS_MASTER_URI="http://robot-ip:11311/"` accordingly.
 
 
 # Useful Information
