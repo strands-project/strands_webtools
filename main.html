@@ -51,29 +51,30 @@
       function init() {
       // Connecting to ROS.
       var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+'/rosws'
+      url : 'ws://'+hostname+'/linda/rosws'
       });
 
       // ----------------------------------------------------------------------
       // Initialize the teleop.
       // ----------------------------------------------------------------------
-      var teleop = new KEYBOARDTELEOP.Teleop({
-      ros : ros,
-      topic : '/cmd_vel'
-      });
+      //var teleop = new KEYBOARDTELEOP.Teleop({
+      //ros : ros,
+      //topic : '/cmd_vel'
+      //});
 
       // ----------------------------------------------------------------------
       // Initialize the PTU teleop.
       // ----------------------------------------------------------------------
-      var teleop = new PTU_KEYBOARDTELEOP.Teleop({
-      ros : ros,
-      topic : '/ptu_jointstate'
-      });
+      //var teleop = new PTU_KEYBOARDTELEOP.Teleop({
+      //ros : ros,
+      //topic : '/ptu_jointstate'
+      //});
 
       // ----------------------------------------------------------------------
       // Create a UI slider using JQuery UI.
       // ----------------------------------------------------------------------
-      $('#speed-slider').slider({
+/*      
+$('#speed-slider').slider({
       range : 'min',
       min : 0,
       max : 100,
@@ -91,7 +92,7 @@
       // ----------------------------------------------------------------------
       $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
       teleop.scale = ($('#speed-slider').slider('value') / 100.0);
-      
+*/      
 
       // ----------------------------------------------------------------------
       // Subscribing to the robot's Pose
@@ -132,7 +133,7 @@
         var viewer = new MJPEGCANVAS.Viewer({
         divID : 'mjpeg',
         host : hostname,
-        port : '80/video',
+        port : '80/linda/video',
         width : 560,
         height : 420,
         topic : '/head_xtion/rgb/image_mono'
@@ -161,13 +162,14 @@
         fixedFrame   : '/map'
         });
 
+/*
         // Add the URDF model of the robot.
         var urdfClient = new ROS3D.UrdfClient({
         ros        : ros,
         tfClient   : tfClient,
         rootObject : viewer3D.scene
         });
-
+*/
         var colorMaterial = ROS3D.makeColorMaterial(1, 0, 0,0.5);
 
         // Track robot pose with an arrow
