@@ -125,6 +125,21 @@ $('#speed-slider').slider({
         + '<td>' + orientation + '</td>');
         });
 
+      var mileTopic = new ROSLIB.Topic({
+      ros         : ros,
+      name        : '/mileage',
+      messageType : 'std_msgs/Float32'
+      });
+      // Subscribes to the robot's pose. When rosbridge receives the pose
+      // message from ROS, it forwards the message to roslibjs, which calls this
+      // callback.
+      mileTopic.subscribe(function(message) {
+      // Formats the pose for outputting.
+      var mileage = 'current mileage: ' + message.data + ' metres travelled';
+      
+      $('#mileage').html(mileage);
+        });
+
         // ----------------------------------------------------------------------
         // Create the camera viewer.
         // ----------------------------------------------------------------------
@@ -162,14 +177,14 @@ $('#speed-slider').slider({
         fixedFrame   : '/map'
         });
 
-/*
+
         // Add the URDF model of the robot.
         var urdfClient = new ROS3D.UrdfClient({
         ros        : ros,
         tfClient   : tfClient,
         rootObject : viewer3D.scene
         });
-*/
+
         var colorMaterial = ROS3D.makeColorMaterial(1, 0, 0,0.5);
 
         // Track robot pose with an arrow
@@ -197,8 +212,8 @@ $('#speed-slider').slider({
         });
         grid.on('change', function() {
         // Change the opacity level.
-        grid.currentGrid.children[0].material.transparent = true;
-        grid.currentGrid.children[0].material.opacity = 0.25;
+        grid.currentGrid.children[0].material.transparent = false;
+        grid.currentGrid.children[0].material.opacity = 0.85;
         grid.currentGrid.children[0].material.needsUpdate = true;
         });
         }
@@ -214,7 +229,7 @@ $('#speed-slider').slider({
       </ul>
     </div>
     <div class="container">
-      <h1><small>Simple keyboard control</small></h1>
+      <!--<h1><small>Simple keyboard control</small></h1>
       <div class="row">
         <div class="col-span-6">
           <h2><small>Robot</small></h2>
@@ -232,8 +247,9 @@ $('#speed-slider').slider({
           </ul>
         </div>
       </div>
-      <div id="speed-label"></div>
-      <div id="speed-slider"></div>
+	-->
+      <!-- <div id="speed-label"></div>
+      <div id="speed-slider"></div>-->
       
       <div class="row">
         <div class="col-span-6">
@@ -244,6 +260,11 @@ $('#speed-slider').slider({
           <h1><small>Robot cam</small></h1>
           <div id="mjpeg"></div>
         </div>
+      </div>
+
+      <div class="row" id="misc-data">
+	<h1><small>Mileage</small></h1>
+        <div id="mileage">Mileage</div>
       </div>
 
       <!-- Pose Table -->
