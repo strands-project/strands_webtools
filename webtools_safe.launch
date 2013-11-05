@@ -1,5 +1,5 @@
 <launch>
-	<include file="$(find rosbridge_server)/launch/rosbridge_websocket_ro.launch" />
+	<include file="$(find rosbridge_server)/launch/rosbridge_websocket_safe.launch" />
 	<!--<node pkg="strands_webtools" type="webserver.sh" name="webserver" cwd="node" /> -->
 	<node pkg="mjpeg_server" type="mjpeg_server" name="mjpeg_server">
 		<param name="port" value="8181" />
