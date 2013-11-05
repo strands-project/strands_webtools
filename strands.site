@@ -4,13 +4,10 @@
 	RewriteEngine On
 	#LogLevel debug
 
-
-
-
 	# proxy for rosbridge
-	RewriteRule ^/video http://localhost:8181/ [P]
-        ProxyPass /rosws ws://localhost:9090/
-    	ProxyPassReverse /rosws ws://localhost:9090/	
+	RewriteRule ^/linda/video http://localhost:8181/ [P]
+        ProxyPass /linda/rosws ws://localhost:9090/
+    	ProxyPassReverse /linda/rosws ws://localhost:9090/	
 
 </VirtualHost>
 

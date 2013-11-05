@@ -51,29 +51,30 @@
       function init() {
       // Connecting to ROS.
       var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+'/rosws'
+      url : 'ws://'+hostname+'/linda/rosws'
       });
 
       // ----------------------------------------------------------------------
       // Initialize the teleop.
       // ----------------------------------------------------------------------
-      var teleop = new KEYBOARDTELEOP.Teleop({
-      ros : ros,
-      topic : '/cmd_vel'
-      });
+      //var teleop = new KEYBOARDTELEOP.Teleop({
+      //ros : ros,
+      //topic : '/cmd_vel'
+      //});
 
       // ----------------------------------------------------------------------
       // Initialize the PTU teleop.
       // ----------------------------------------------------------------------
-      var teleop = new PTU_KEYBOARDTELEOP.Teleop({
-      ros : ros,
-      topic : '/ptu_jointstate'
-      });
+      //var teleop = new PTU_KEYBOARDTELEOP.Teleop({
+      //ros : ros,
+      //topic : '/ptu_jointstate'
+      //});
 
       // ----------------------------------------------------------------------
       // Create a UI slider using JQuery UI.
       // ----------------------------------------------------------------------
-      $('#speed-slider').slider({
+/*      
+$('#speed-slider').slider({
       range : 'min',
       min : 0,
       max : 100,
@@ -91,7 +92,7 @@
       // ----------------------------------------------------------------------
       $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
       teleop.scale = ($('#speed-slider').slider('value') / 100.0);
-      
+*/      
 
       // ----------------------------------------------------------------------
       // Subscribing to the robot's Pose
@@ -124,6 +125,21 @@
         + '<td>' + orientation + '</td>');
         });
 
+      var mileTopic = new ROSLIB.Topic({
+      ros         : ros,
+      name        : '/mileage',
+      messageType : 'std_msgs/Float32'
+      });
+      // Subscribes to the robot's pose. When rosbridge receives the pose
+      // message from ROS, it forwards the message to roslibjs, which calls this
+      // callback.
+      mileTopic.subscribe(function(message) {
+      // Formats the pose for outputting.
+      var mileage = 'current mileage: ' + message.data + ' metres travelled';
+      
+      $('#mileage').html(mileage);
+        });
+
         // ----------------------------------------------------------------------
         // Create the camera viewer.
         // ----------------------------------------------------------------------
@@ -132,7 +148,7 @@
         var viewer = new MJPEGCANVAS.Viewer({
         divID : 'mjpeg',
         host : hostname,
-        port : '80/video',
+        port : '80/linda/video',
         width : 560,
         height : 420,
         topic : '/head_xtion/rgb/image_mono'
@@ -160,6 +176,7 @@
         rate         : 10.0,
         fixedFrame   : '/map'
         });
+
 
         // Add the URDF model of the robot.
         var urdfClient = new ROS3D.UrdfClient({
@@ -195,8 +212,8 @@
         });
         grid.on('change', function() {
         // Change the opacity level.
-        grid.currentGrid.children[0].material.transparent = true;
-        grid.currentGrid.children[0].material.opacity = 0.25;
+        grid.currentGrid.children[0].material.transparent = false;
+        grid.currentGrid.children[0].material.opacity = 0.85;
         grid.currentGrid.children[0].material.needsUpdate = true;
         });
         }
@@ -212,7 +229,7 @@
       </ul>
     </div>
     <div class="container">
-      <h1><small>Simple keyboard control</small></h1>
+      <!--<h1><small>Simple keyboard control</small></h1>
       <div class="row">
         <div class="col-span-6">
           <h2><small>Robot</small></h2>
@@ -230,8 +247,9 @@
           </ul>
         </div>
       </div>
-      <div id="speed-label"></div>
-      <div id="speed-slider"></div>
+	-->
+      <!-- <div id="speed-label"></div>
+      <div id="speed-slider"></div>-->
       
       <div class="row">
         <div class="col-span-6">
@@ -242,6 +260,11 @@
           <h1><small>Robot cam</small></h1>
           <div id="mjpeg"></div>
         </div>
+      </div>
+
+      <div class="row" id="misc-data">
+	<h1><small>Mileage</small></h1>
+        <div id="mileage">Mileage</div>
       </div>
 
       <!-- Pose Table -->
