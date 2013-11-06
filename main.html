@@ -51,7 +51,7 @@
       function init() {
       // Connecting to ROS.
       var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+'/linda/rosws'
+      url : 'ws://'+hostname+':9090'
       });
 
       // ----------------------------------------------------------------------
@@ -147,7 +147,6 @@
         var viewer = new MJPEGCANVAS.Viewer({
         divID : 'mjpeg',
         host : hostname,
-        port : '80/linda/video',
         width : 560,
         height : 420,
         topic : '/head_xtion/rgb/image_mono'
