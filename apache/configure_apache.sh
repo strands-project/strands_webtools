@@ -18,7 +18,7 @@ sudo install -d $apache_doc_root/scitos_description
 sudo cp -af $scitos_desc/meshes $apache_doc_root/scitos_description
 
 
-sudo install -p $webtools/*.html $apache_doc_root
+sudo install -p *.html $apache_doc_root
 
 for s in *.site; do 
 	bn=`basename "$s" .site`
