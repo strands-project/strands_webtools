@@ -5,7 +5,7 @@ project(strands_webtools)
 add_custom_target(apache)
 
 add_custom_command(TARGET apache
-	WORKING_DIRECTORY ${strands_webtools_SOURCE_DIR}
+	WORKING_DIRECTORY ${strands_webtools_SOURCE_DIR}/apache
 	COMMAND bash -x ./configure_apache.sh
 )
 
