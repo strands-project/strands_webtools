@@ -13,3 +13,6 @@
 [submodule "keyboardteleopjs"]
 	path = keyboardteleopjs
 	url = https://github.com/WPI-RAIL/keyboardteleopjs.git
+[submodule "nav2djs"]
+	path = nav2djs
+	url = https://github.com/WPI-RAIL/nav2djs.git
