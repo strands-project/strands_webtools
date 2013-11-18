@@ -3,7 +3,7 @@
 	#ServerName marcs-pc
 	RewriteEngine On
 	#LogLevel debug
-
+	Options -Indexes
 	# proxy for rosbridge
 	RewriteRule ^/linda/video http://localhost:8181/ [P]
         ProxyPass /linda/rosws ws://localhost:9090/

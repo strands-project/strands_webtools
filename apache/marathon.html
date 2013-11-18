@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Linda - Lincoln's Patrol Bot</title>
     <meta charset="utf-8" />
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="-1">
@@ -54,46 +55,7 @@
       url : 'ws://'+hostname+'/linda/rosws'
       });
 
-      // ----------------------------------------------------------------------
-      // Initialize the teleop.
-      // ----------------------------------------------------------------------
-      //var teleop = new KEYBOARDTELEOP.Teleop({
-      //ros : ros,
-      //topic : '/cmd_vel'
-      //});
-
-      // ----------------------------------------------------------------------
-      // Initialize the PTU teleop.
-      // ----------------------------------------------------------------------
-      //var teleop = new PTU_KEYBOARDTELEOP.Teleop({
-      //ros : ros,
-      //topic : '/ptu_jointstate'
-      //});
-
-      // ----------------------------------------------------------------------
-      // Create a UI slider using JQuery UI.
-      // ----------------------------------------------------------------------
-/*      
-$('#speed-slider').slider({
-      range : 'min',
-      min : 0,
-      max : 100,
-      value : 90,
-      slide : function(event, ui) {
-      // Change the speed label.
-      $('#speed-label').html('Speed: ' + ui.value + '%');
-      // Scale the speed.
-      teleop.scale = (ui.value / 100.0);
-      }
-      });
-
-      // ----------------------------------------------------------------------
-      // Set the initial speed .
-      // ----------------------------------------------------------------------
-      $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
-      teleop.scale = ($('#speed-slider').slider('value') / 100.0);
-*/      
-
+ 
       // ----------------------------------------------------------------------
       // Subscribing to the robot's Pose
       // ----------------------------------------------------------------------
@@ -102,12 +64,14 @@ $('#speed-slider').slider({
       // topic interacts with the /robot_pose topic, published by the robot.
       var poseTopic = new ROSLIB.Topic({
       ros         : ros,
-      name        : '/amcl_pose',
+      name        : '/webthrottle/amcl_pose',
       messageType : 'geometry_msgs/PoseWithCovarianceStamped'
       });
+
       // Subscribes to the robot's pose. When rosbridge receives the pose
       // message from ROS, it forwards the message to roslibjs, which calls this
       // callback.
+	/*
       poseTopic.subscribe(function(message) {
       // Formats the pose for outputting.
       var now = new Date();
@@ -124,12 +88,13 @@ $('#speed-slider').slider({
         + '<td>' + position + '</td>'
         + '<td>' + orientation + '</td>');
         });
-
+*/
       var mileTopic = new ROSLIB.Topic({
       ros         : ros,
-      name        : '/mileage',
+      name        : '/webthrottle/mileage',
       messageType : 'std_msgs/Float32'
       });
+
       // Subscribes to the robot's pose. When rosbridge receives the pose
       // message from ROS, it forwards the message to roslibjs, which calls this
       // callback.
@@ -151,7 +116,7 @@ $('#speed-slider').slider({
         port : '80/linda/video',
         width : 560,
         height : 420,
-        topic : '/head_xtion/rgb/image_mono'
+        topic : '/image_blurrer/output_video'
         });
         
         
@@ -171,9 +136,9 @@ $('#speed-slider').slider({
         // Create a TF client that subscribes to the fixed frame.
         var tfClient = new ROSLIB.TFClient({
         ros          : ros,
-        angularThres : 0.01,
-        transThres   : 0.01,
-        rate         : 10.0,
+        angularThres : 0.1,
+        transThres   : 0.1,
+        rate         : 1.0,
         fixedFrame   : '/map'
         });
 
@@ -221,14 +186,26 @@ $('#speed-slider').slider({
   </head>
 
   <body onload="init()">
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	</script>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <a class="navbar-brand" href="#">strands_webtools</a>      
+      <a class="navbar-brand" href="#"><img src="http://www.lincoln.ac.uk/home/media/universityoflincoln/styleassets/images/logo-white.png"/></a>      
       <ul class="nav pull-right">
-        <li class="active"><a href="main.html">Main</a></li>
-        <li><a href="navigation.html">Autonomous</a></li>
+        <li class="active"><a href="marathon.html">Marathon</a></li>
+        <!--<li><a href="navigation.html">Autonomous</a></li>-->
       </ul>
     </div>
     <div class="container">
+      <div class="row">
+	<H1><font color="red">BETA WEBSITE, subject to continuous modification and only available occasionally for now</font></H1>
       <!--<h1><small>Simple keyboard control</small></h1>
       <div class="row">
         <div class="col-span-6">
@@ -250,15 +227,42 @@ $('#speed-slider').slider({
 	-->
       <!-- <div id="speed-label"></div>
       <div id="speed-slider"></div>-->
-      
+      <br/>
+      <div class="row">
+	<div class="col-span-2">
+		<a href="http://strands.acin.tuwien.ac.at/"><img src="http://strands.acin.tuwien.ac.at/logos/strands2.png"/></a>
+		<p>
+			<div class="fb-like" data-href="http://lcas.lincoln.ac.uk/linda/marathon.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+			<g:plusone></g:plusone>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="LindaStrands" data-related="strands_project" data-dnt="true">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		</p>
+	</div>
+	<div class="col-span-4">
+		<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/LindaStrands" data-widget-id="402372847793741825">Tweets by @LindaStrands</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div>
+	<div class="col-span-4">
+<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/strands_project" data-widget-id="402373765784293377">Tweets by @strands_project</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+	<div class="col-span-2">
+		<iframe src="https://mapsengine.google.com/map/embed?mid=z6XG8OR_zLGs.kbF9OSRyk6dQ" width="220" height="250"></iframe>
+	</div>
+      </div>
+
+
       <div class="row">
         <div class="col-span-6">
           <h1><small>3D map</small></h1>
           <div id="threed-map"></div>
+	  <i>Use your mouse to navigate the map. Due to a high load on the server you may have to reload this page, if you cannot see the robot on its map here.</i>
         </div>
         <div class="col-span-6">
-          <h1><small>Robot cam</small></h1>
+          <h1><small>Robot live cam</small></h1>
           <div id="mjpeg"></div>
+	  <i>The video is blurred to protect the privavy of our staff in the L-CAS research lab.</i>
         </div>
       </div>
 
@@ -267,7 +271,7 @@ $('#speed-slider').slider({
         <div id="mileage">Mileage</div>
       </div>
 
-      <!-- Pose Table -->
+      <!-- Pose Table
       <div class="row" id="pose-data">
         <div class="col-span-12">
           <h1><small>Robot's Pose</small></h1>
@@ -285,7 +289,9 @@ $('#speed-slider').slider({
           </table>
         </div>
       </div>
+ -->
       
     </div>
+
   </body>
 </html>
