@@ -9,6 +9,9 @@ add_custom_command(TARGET apache
 	COMMAND bash -x ./configure_apache.sh
 )
 
+add_subdirectory (apache)
+
+ 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
