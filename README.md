@@ -43,9 +43,17 @@ echo -e "# Depends: proxy\nLoadModule proxy_wstunnel_module /usr/lib/apache2/mod
 
       ```
 
-## setup a .site file for your apache setup:
+## Network and Server setup:
 
-Here's the Lincoln working file that resides under `/etc/apache2/available-sites/strands.site
+The setup is as follows:
+* There is a webhost called *WH* in the following, which is accessible from the internet on port 80, which fulfills these requirements:
+  * has Ubuntu 12.04LTS 64bit
+  * runs (part of) the STRANDS ROS system (everything in strands_webtools is the minimum) and it can  connect to the robot's network
+  * it has a firewall in place to ensure that it only accepts port 80 from the outside worlds, but accepts everything from the robot (I use `ufw` to configure this easily)
+* There is the robot, called *Linda* here, that can connect to that server on all ports
+* *WH* uses *Linda*'s `ROS_MASTER_URI` which needs to be configured to e.g. `export ROS_MASTER_URI=http://linda:11311`
+* On *WH* the html, css, etc. files are served in a dedicated repository, e.g. `/opt/strands/lib/www` is assumed in the following.
+* Apache needs to be configured to serve the files and act as a reverse proxy to allow to access ROS via port 80. Here's the Lincoln working file that resides under `/etc/apache2/available-sites/strands.site`
 ```
 <VirtualHost *:80>
 	DocumentRoot /var/www/
