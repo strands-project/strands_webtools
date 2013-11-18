@@ -16,7 +16,15 @@ rosdep -y install -r strands_webtools
 ```
 * ROS requirements from source (e.g. OS X): rosbridge_suite, rosauth, tf2_web_republisher, mjpeg_server, robot_pose_publisher
 
-# Running the webtools behind a firewall (for the marathon)
+
+
+
+# Running as standalone (not as part of a web server)
+1. `roslaunch strands_webtools webtools.launch`
+2. (optional) `rosrun topic_republisher republish_ptu_jointstate.py` (republishes the PTU joint state on `/ptu`, only needed for MORSE; The package [topic_republisher](https://github.com/strands-project/strands_utils/tree/master/topic_republisher) can be found in the [strands_utils](https://github.com/strands-project/strands_utils) repository)
+3. Open in web browser: [http://localhost/](http://localhost/)
+
+# Running the webtools behind a firewall in Apache (for the marathon)
 
 ## Install Apache2
  * ```sudo apt-get install apache2 libapache2-mod-proxy-html```
@@ -42,6 +50,19 @@ sudo chmod 644 /usr/lib/apache2/modules/mod_proxy{_wstunnel,}.so
 echo -e "# Depends: proxy\nLoadModule proxy_wstunnel_module /usr/lib/apache2/modules/mod_proxy_wstunnel.so" | sudo tee -a /etc/apache2/mods-available/proxy_wstunnel.load
 
       ```
+## ROS setup
+The marathon branch requires STRAND's own version of rosbridge_suite and mjpeg_server to added security features. Here's the rosinstall config:
+```
+- git: 
+   local-name: rosbridge_suite
+   uri: 'https://github.com/strands-project/rosbridge_suite.git'
+   version: readonly_capabilities
+   
+- git: 
+   local-name: mjpeg_server
+   uri: 'https://github.com/strands-project/mjpeg_server.git'
+   version: groovy-devel
+```
 
 ## Network and Server setup:
 
@@ -83,10 +104,15 @@ The setup is as follows:
 </VirtualHost>
 ```
 
-You may want to adapt this (e.g. change 'linda' for something else, but be aware to change the `marathon.html` file correspondingly.
+
+You may want to adapt this (e.g. change 'linda' for something else), but be aware to change the `marathon.html` file correspondingly.
+
+## Running it
+* run all the nodes on the robot, e.g. openni, mapserver, etc.
+* On the robot make sure you run the nodes that throttle the network traffic:
+`roslaunch strands_webtools webtools_robot.launch` You want to include this in your usual robot setup. It just advertises a few other topics that have low bandwidth that *WH* is then connecting to.
+* On *WH* run `roslaunch strands_webtools webtools_safe.launch` with `ROS_MASTER_URI=http://linda:11311/` (or whatever your robot is called, e.g. just its IP address)
+* goto the external URL (e.g. http://lcas.lincoln.ac.uk/linda/marathon.html) and check if everythin works
 
 
-# Running
-1. `roslaunch strands_webtools webtools.launch`
-2. (optional) `rosrun topic_republisher republish_ptu_jointstate.py` (republishes the PTU joint state on `/ptu`, only needed for MORSE; The package [topic_republisher](https://github.com/strands-project/strands_utils/tree/master/topic_republisher) can be found in the [strands_utils](https://github.com/strands-project/strands_utils) repository)
-3. Open in web browser: [http://localhost/](http://localhost/)
+
