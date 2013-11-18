@@ -14,10 +14,11 @@ An interface to access the real and/or simulated robot via web applications. It 
 ```
 rosdep -y install -r strands_webtools
 ```
+* ROS requirements from source (e.g. OS X): rosbridge_suite, rosauth, tf2_web_republisher, mjpeg_server, robot_pose_publisher
 
-   * ROS requirements from source (e.g. OS X): rosbridge_suite, rosauth, tf2_web_republisher, mjpeg_server, robot_pose_publisher
+# Running the webtools behind a firewall (for the marathon)
 
-# Install Apache2
+## Install Apache2
  * ```sudo apt-get install apache2 libapache2-mod-proxy-html```
  * install the [mod_wstunnel](http://www.amoss.me.uk/2013/06/apache-2-2-websocket-proxying-ubuntu-mod_proxy_wstunnel/) for apache (the script `roscd strands_webtools; sudo ./build_wstunnel.sh` automates the following)
      ```
@@ -29,19 +30,53 @@ svn checkout http://svn.apache.org/repos/asf/httpd/httpd/tags/2.2.20/ httpd-2.2.
 wget http://cafarelli.fr/gentoo/apache-2.2.24-wstunnel.patch
 cd httpd-2.2.20
 patch -p1 < ../apache-2.2.24-wstunnel.patch
-# Build Apache 
+## Build Apache 
 svn co http://svn.apache.org/repos/asf/apr/apr/branches/1.4.x srclib/apr
 svn co http://svn.apache.org/repos/asf/apr/apr-util/branches/1.3.x srclib/apr-util
 ./buildconf
 ./configure --enable-proxy=shared --enable-proxy_wstunnel=shared
 make
-# Copy the module and recompiled mod_proxy (for new symbols) to the ubuntu apache installation and update the permissions to match the other modules
+## Copy the module and recompiled mod_proxy (for new symbols) to the ubuntu apache installation and update the permissions to match the other modules
 sudo cp modules/proxy/.libs/mod_proxy{_wstunnel,}.so /usr/lib/apache2/modules/
 sudo chmod 644 /usr/lib/apache2/modules/mod_proxy{_wstunnel,}.so
 echo -e "# Depends: proxy\nLoadModule proxy_wstunnel_module /usr/lib/apache2/modules/mod_proxy_wstunnel.so" | sudo tee -a /etc/apache2/mods-available/proxy_wstunnel.load
 
       ```
- * install configure Apache to run the STRANDS config: `roscd strands_webtools; bash -x ./configure_apache.sh` 
+
+## setup a .site file for your apache setup:
+
+Here's the Lincoln working file that resides under `/etc/apache2/available-sites/strands.site
+```
+<VirtualHost *:80>
+	DocumentRoot /var/www/
+  # this tells apache that everything under "linda" is served from another location... that's where your html files should be
+	Alias /linda /opt/strands/lib/www
+
+	# just entering the server name will take you to your institutions website
+	RedirectMatch permanent ^/$ http://robots.lincoln.ac.uk/
+	
+	# disable listing of directories in the strands dir
+	<Directory /opt/strands/lib/www>
+		Options -Indexes		
+	</Directory>
+	
+	# rewrite engine is needed for the reverseproxy things to work
+	RewriteEngine On
+	
+	Options -Indexes
+	
+	
+	# serving mjpeg image streams under this URL. This needs to match the URL given in the HTML file. the mjpeg_server is running locally on port 8181 (as specified in the launch file)
+	RewriteRule ^/linda/video http://localhost:8181/ [P]
+	
+  # reverse proxy for rosbridge (rosbridge is running locally on port 9090 (as specified in the launch file)
+  ProxyPass /linda/rosws ws://localhost:9090/
+  ProxyPassReverse /linda/rosws ws://localhost:9090/	
+</VirtualHost>
+```
+
+You may want to adapt this (e.g. change 'linda' for something else, but be aware to change the `marathon.html` file correspondingly.
+
 
 # Running
 1. `roslaunch strands_webtools webtools.launch`
