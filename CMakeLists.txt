@@ -1,6 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(strands_webtools)
+ 
 
+add_custom_target(apache)
+
+add_custom_command(TARGET apache
+	WORKING_DIRECTORY ${strands_webtools_SOURCE_DIR}/apache
+	COMMAND bash -x ./configure_apache.sh
+)
+
+add_subdirectory (apache)
+
+ 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
