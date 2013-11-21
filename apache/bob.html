@@ -10,7 +10,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
-    
+
     <!-- jQuery and display.js are conveniences for interacting with the DOM -->
     <script src="js/jquery.js"></script>
     <script src="js/display.js"></script>
@@ -22,7 +22,7 @@
     <script src="roslibjs/include/EventEmitter2/eventemitter2.js"></script>
     <!-- Roslibjs handles core ROS functionality in the browser -->
     <script src="roslibjs/build/roslib.js"></script>
-    
+
     <!-- ROS2DJS -->
     <!-- EaselJS is a dependency of ros2djs -->
     <script src="ros2djs/include/EaselJS/easeljs.js"></script>
@@ -119,7 +119,7 @@
         topic : '/image_blurrer/output_video'
         });
         
-        /*
+        
         // ----------------------------------------------------------------------
         // Rendering the robot in 3D
         // ----------------------------------------------------------------------
@@ -187,33 +187,33 @@
 
   <body onload="init()">
 	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
+	<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if
+	  (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src
+	  = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs); }(document, 'script',
+	  'facebook-jssdk'));
 	</script>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <a class="navbar-brand" href="#">Bob</a>      
-      <!--<a class="navbar-brand" href="#"><img src="http://www.birmingham.ac.uk/Images/website/logo.gif"/></a>-->      
-      <ul class="nav pull-right">
-        <!--<li class="active"><a href="marathon.html">Marathon</a></li>-->
-      </ul>
-    </div>
-    <div class="container">
-      <div class="row">
-	      <H1>
-          <font color="red">BETA WEBSITE, subject to continuous modification and only available occasionally for now</font>
-        </H1>
-
-        <H1>
-          Welcome to Bob's homepage!
-        </H1>
-
-        <H4>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">Bob</a>
+    <!--<a class="navbar-brand" href="#"><img src="http://www.birmingham.ac.uk/Images/website/logo.gif"/></a>-->      
+    <ul class="nav pull-right">
+      <!--<li class="active"><a href="marathon.html">Marathon</a></li>-->
+    </ul>
+  </div>
+  <div class="container">
+    <div class="row">
+	    <H1>
+        <font color="red">BETA WEBSITE, subject to continuous modification and only available occasionally for now</font>
+      </H1>
+      
+      <br/>
+      
+      <H1>
+        Welcome to Bob's homepage!
+      </H1>
+      
+      <H4>
         <p>
           Hello, my name is Bob. I am a research robot. I am situated in
           the <a href="http://cs.bham.ac.uk">School of Computer Science</a> at
@@ -221,7 +221,7 @@
           UK. My current job is to patrol the lower ground floor of the
           Computer Science building. Below you can find some information of
           what I am actual doing.
-        </p>
+          </p>
         
         <p>
           In general, I am a research platform in the context of
@@ -229,47 +229,50 @@
           (Spatio-Temporal Representations and Activities for Cognitive Control
           in Long-Term Scenarios), a 4-year EU FP7 Integrating Project.
         </p>
-        </H4>
+      </H4>
+
+      <br/>
   
-        <br/>
-  
-        <div class="row">
+      <div class="row">
+        
+	      <div class="col-span-2">
+		      <a href="http://strands.acin.tuwien.ac.at/"><img src="http://strands.acin.tuwien.ac.at/logos/strands2.png"/></a>
+		      <p>
+			      <div class="fb-like" data-href="http://www.cs.bham.ac.uk/research/projects/strands/bob/marathon.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+			      <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+			      <g:plusone></g:plusone>
+			      <a href="https://twitter.com/share" class="twitter-share-button" data-via="BobStrands" data-related="strands_project" data-dnt="true">Tweet</a>
+			      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		      </p>
           
-	        <div class="col-span-2">
-		        <a href="http://strands.acin.tuwien.ac.at/"><img src="http://strands.acin.tuwien.ac.at/logos/strands2.png"/></a>
-		        <p>
-			        <div class="fb-like" data-href="http://www.cs.bham.ac.uk/research/projects/strands/bob/marathon.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-			        <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-			        <g:plusone></g:plusone>
-			        <a href="https://twitter.com/share" class="twitter-share-button" data-via="BobStrands" data-related="strands_project" data-dnt="true">Tweet</a>
-			        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-		        </p>
-            
-	        </div>
-	        <div class="col-span-4">
-            <a class="twitter-timeline" href="https://twitter.com/BobStrands"
-               data-widget-id="403528076920750080">Tweets by @BobStrands</a>
-            <script>!function(d,s,id){var
-              js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-          </div>
-	        <div class="col-span-4">
-            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/strands_project" data-widget-id="402373765784293377">Tweets by @strands_project</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        </div>
-	        <div class="col-span-2">
-		        <iframe src="https://mapsengine.google.com/map/embed?mid=zSg7wdf-c_sg.k4rNVQP74-VY" width="220" height="250"></iframe>
-	        </div>
+	      </div>
+	      
+        <div class="col-span-4">
+          <a class="twitter-timeline" href="https://twitter.com/BobStrands"
+             data-widget-id="403528076920750080">Tweets by @BobStrands</a>
+          <script>!function(d,s,id){var
+            js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
         
-        <div class="row">
-          <div class="col-span-12">
-            <h1><small>Robot live cam</small></h1>
-            <div id="mjpeg"></div>
-	          <i>The video is blurred to protect the privacy of our students and staff.</i>
-          </div>
+	      <div class="col-span-4">
+          <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/strands_project" data-widget-id="402373765784293377">Tweets by @strands_project</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
+        
+	      <div class="col-span-2">
+		      <iframe src="https://mapsengine.google.com/map/embed?mid=zSg7wdf-c_sg.k4rNVQP74-VY" width="220" height="250"></iframe>
+	      </div>
         
       </div>
+
+      <div class="row">
+        <div class="col-span-6">
+          <h1><small>Robot live cam</small></h1>
+          <div id="mjpeg"></div>
+	        <i>The video is blurred to protect the privacy of our students and staff.</i>
+        </div>
+      </div>
       
+    </div>
   </body>
 </html>
