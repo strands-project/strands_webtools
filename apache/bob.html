@@ -193,6 +193,17 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script>
+      var myVar=setInterval(function(){myStatusTimer()},10000);
+      
+	    function myStatusTimer()
+	    {
+		  $.getJSON('http://www.cs.bham.ac.uk/~burbrcjc/marathon.json', function (json) {
+			var s=json.length
+	    $('#status').html('In his current run, Bob has been travelling <b>'+ (json[s-1].distance/1000).toFixed(3) + ' kilometres</b> so far. The total autonomous runtime in this tour is <b>'+(json[s-1].run_duration/3600).toFixed(2)+' hour(s)</b>. <b>' + json[s-1].successful_waypoints + ' waypoints</b> have been successfully visited during this tour.');
+	    });      
+	    }
+
+
         // json stuff
         //      window.robot_stats=null;
         var get_robot_stats = function (robot_name, URL, updateFunction) {
@@ -376,7 +387,7 @@
             $("#battery").text("Battery: " + robot_stats.battery + " %");
             $("#charging").text("Charging: " + robot_stats.charging);
             $("#bumper").text("Bumped: " + robot_stats.bumper);
-            $("#mileage").text("Mileage: " + (robot_stats.mileage/1000).toFixed(3) + " kilometres");
+            $("#mileage").text("Overall mileage: " + (robot_stats.mileage/1000).toFixed(3) + " kilometres");
 
 
 
@@ -478,7 +489,7 @@
       </div>
 
       <div class="row">
-        <div class="col-span-6">
+        <div class="col-span-9">
           <h1><small>Robot live cam</small></h1>
           <div id="mjpeg"></div>
 	        <i>The video is blurred to protect the privacy of our students and staff.</i>
@@ -490,6 +501,13 @@
             <div id="map-canvas" ></div><br/>
             <i>The map shows the lower ground floor of the Computer Science building.</i>
         </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-span-6">
+  	      <h1><small>Bob's Current Tour</small></h1>
+	        <div id="status">Status</div>
+	      </div>
         <div class="col-span-3">
           <h1><small>Current status</small></h1>
             <div id="battery" style="font-weight:normal;"></div>          
@@ -498,8 +516,7 @@
             <div id="mileage" style="font-weight:normal;"></div>              
         </div>
       </div>
-          
-
+      
 
 
     </div> 
