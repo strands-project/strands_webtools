@@ -2,8 +2,8 @@
 Changelog for package strands_webtools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2014-08-27)
+------------------
 * moved webserver.sh
 * Merge pull request `#59 <https://github.com/strands-project/strands_webtools/issues/59>`_ from ToMadoRe/hydro-devel
   Fixed missing build dependencies
