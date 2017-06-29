@@ -2,6 +2,11 @@
 Changelog for package strands_webtools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* changed mjpeg_server to web_video_server
+* Contributors: Marc Hanheide
+
 0.0.2 (2014-11-05)
 ------------------
 * merged `#62 <https://github.com/strands-project/strands_webtools/issues/62>`_
